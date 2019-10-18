@@ -62,5 +62,8 @@ CREATE TABLE dokumenttype(
     CONSTRAINT pk_Dokumenttype PRIMARY KEY(id, type)
 );
 
+COMMIT;
+
 INSERT INTO dokumenttype VALUES(1, 'Lohnzettel');
 INSERT INTO dokumenttype VALUES(2, 'Arbeitsvertrag');
+INSERT INTO dokumenttype VALUES(3, 'Others');
