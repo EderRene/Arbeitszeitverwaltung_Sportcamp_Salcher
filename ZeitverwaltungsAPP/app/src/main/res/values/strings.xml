@@ -7,7 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_Time_Manager">Time-Manager</string>
-    <string name="menu_Work_Overview">Work-Overview</string>
-    <string name="menu_Profile">Profile</string>
+    <string name="menu_time_manager">Time-Manager</string>
+    <string name="menu_work_overview">Work-Overview</string>
+    <string name="menu_profile">Profile</string>
 </resources>

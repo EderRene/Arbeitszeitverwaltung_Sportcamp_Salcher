@@ -22,8 +22,8 @@ public class Work_OverviewFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         workOverviewViewModel =
                 ViewModelProviders.of(this).get(Work_OverviewViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_Work_Overview, container, false);
-        final TextView textView = root.findViewById(R.id.text_Work_Overview);
+        View root = inflater.inflate(R.layout.fragment_work_overview, container, false);
+        final TextView textView = root.findViewById(R.id.text_work_overview);
         workOverviewViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

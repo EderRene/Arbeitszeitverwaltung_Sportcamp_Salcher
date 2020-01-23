@@ -1,5 +1,9 @@
 package com.example.zeitverwaltung.ui.Time_Manager;
 
+import android.content.Context;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,7 +14,7 @@ public class Time_ManagerViewModel extends ViewModel {
 
     public Time_ManagerViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is Time_Manager fragment");
+        mText.setValue("Hello Worlds!");
     }
 
     public LiveData<String> getText() {
