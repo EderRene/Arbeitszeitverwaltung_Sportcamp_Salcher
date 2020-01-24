@@ -14,7 +14,6 @@ public class Time_ManagerViewModel extends ViewModel {
 
     public Time_ManagerViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Hello Worlds!");
     }
 
     public LiveData<String> getText() {
