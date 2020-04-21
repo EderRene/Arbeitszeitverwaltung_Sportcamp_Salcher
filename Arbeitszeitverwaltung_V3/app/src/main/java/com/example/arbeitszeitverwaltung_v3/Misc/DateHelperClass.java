@@ -1,4 +1,4 @@
-package com.example.zeitverwaltung.ui.misc;
+package com.example.arbeitszeitverwaltung_v3.Misc;
 
 import java.util.Date;
 

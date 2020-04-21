@@ -1,6 +1,7 @@
-package com.example.zeitverwaltung.data;
+package com.example.arbeitszeitverwaltung_v3.Data;
 
-import com.example.zeitverwaltung.ui.misc.DateHelperClass;
+
+import com.example.arbeitszeitverwaltung_v3.Misc.DateHelperClass;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -106,6 +107,18 @@ public class WorkingHour {
         DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
         String today = formatter.format(workingDate);
         return "Date: "+today+ " Working hours: "+getWholeHours();
+    }
+
+    public String allInfos() {
+        return "WorkingHour{" +
+                "workingDate=" + workingDate +
+                ", forenoonInfo='" + forenoonInfo + '\'' +
+                ", afternoonInfo='" + afternoonInfo + '\'' +
+                ", forenoonStartTime=" + forenoonStartTime +
+                ", forenoonEndTime=" + forenoonEndTime +
+                ", afternoonStartTime=" + afternoonStartTime +
+                ", afternoonEndTime=" + afternoonEndTime +
+                '}';
     }
 
     public Double getForenoonHours(){

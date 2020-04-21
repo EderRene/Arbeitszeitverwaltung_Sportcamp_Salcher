@@ -1,4 +1,4 @@
-package com.example.zeitverwaltung.ui.Time_Manager;
+package com.example.arbeitszeitverwaltung_v3.GUI;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-import com.example.zeitverwaltung.data.WorkingHour;
+import com.example.arbeitszeitverwaltung_v3.Data.WorkingHour;
 
 public class WorkingHourDialog extends AppCompatDialogFragment {
 
@@ -24,7 +24,7 @@ public class WorkingHourDialog extends AppCompatDialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Information")
-                .setMessage(wh.toString())
+                .setMessage(wh.allInfos())
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

@@ -1,8 +1,8 @@
-package com.example.zeitverwaltung.ui.misc;
+package com.example.arbeitszeitverwaltung_v3.Misc;
 
-import com.example.zeitverwaltung.data.WorkingHour;
+import com.example.arbeitszeitverwaltung_v3.Data.WorkingHour;
 
-import org.json.JSONException;
+
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
