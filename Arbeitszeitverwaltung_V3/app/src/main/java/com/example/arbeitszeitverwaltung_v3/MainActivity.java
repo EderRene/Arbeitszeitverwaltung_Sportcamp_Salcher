@@ -10,6 +10,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.arbeitszeitverwaltung_v3.GUI.File_Fragment;
+import com.example.arbeitszeitverwaltung_v3.GUI.Profile_Fragment;
 import com.example.arbeitszeitverwaltung_v3.GUI.Time_ManagerFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -50,10 +52,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Time_ManagerFragment()).commit();
                 break;
             case R.id.nav_Profile:
-                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Profile_Fragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Profile_Fragment()).commit();
                 break;
             case R.id.nav_Files:
-                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new File_Fragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new File_Fragment()).commit();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

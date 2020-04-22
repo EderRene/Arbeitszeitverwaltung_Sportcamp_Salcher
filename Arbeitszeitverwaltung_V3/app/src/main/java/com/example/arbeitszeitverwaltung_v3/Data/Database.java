@@ -11,18 +11,24 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.function.Predicate;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Database{
-    private static final String URL = "http://salcher.synology.me:8888/api/workingHours/";
+    private static final String URL = "http://salcher.synology.me:8888";
+    private static final String URL_workinghour="/api/workingHours/";
+
     private static final String PORT = "8888";
     private int UserId = 3;
     private static Database db;
@@ -39,7 +45,7 @@ public class Database{
 
     public ArrayList<WorkingHour> getWorkinghours(final Date fromDate, final Date toDate){
         OkHttpClient client = new OkHttpClient();
-        Request request=new Request.Builder().url(URL+UserId).build();
+        Request request=new Request.Builder().url(URL+URL_workinghour+UserId).build();
         final ArrayList<WorkingHour> workingHours= new ArrayList<>();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -66,33 +72,55 @@ public class Database{
                 }
             }
         });
-        if (toDate != null) {
-
-            workingHours.removeIf(new Predicate<WorkingHour>() {
-                @Override
-                public boolean test(WorkingHour w) {
-                    if(w.getWorkingDate().compareTo(toDate)>0){
-                        return true;
-                    }else {
-                        return false;
-                    }
-                }
-            });
-        }
-        if (fromDate != null) {
-            workingHours.removeIf(new Predicate<WorkingHour>() {
-                @Override
-                public boolean test(WorkingHour w) {
-                    if(w.getWorkingDate().compareTo(fromDate)<0){
-                        return true;
-                    }else {
-                        return false;
-                    }
-                }
-            });
-        }
         return workingHours;
     }
 
 
+    public void addWorkinghour(WorkingHour wh) throws Exception {
+        SimpleDateFormat sdf;
+        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
+
+        OkHttpClient client = new OkHttpClient();
+        JSONObject id_workindate=new JSONObject();
+        id_workindate.put("id_Employee",UserId);
+        id_workindate.put("workingDate", sdf.format(wh.getWorkingDate()));
+
+        JSONObject forenoonafternoon=new JSONObject();
+
+        if(wh.getForenoonEndTime()!=null||!wh.getForenoonInfo().isEmpty()||wh.getForenoonStartTime()!=null){
+            JSONObject forenoon=new JSONObject();
+            JSONObject values=new JSONObject();
+            values.put("startTime",sdf.format(wh.getForenoonStartTime()));
+            values.put("endTime",sdf.format(wh.getForenoonStartTime()));
+            values.put("info",wh.getForenoonInfo());
+            forenoonafternoon.put("forenoon",values);
+
+        }
+
+        if(wh.getAfternoonEndTime()!=null||!wh.getAfternoonInfo().isEmpty()||wh.getAfternoonStartTime()!=null){
+            JSONObject values=new JSONObject();
+            values.put("startTime",sdf.format(wh.getForenoonStartTime()));
+            values.put("endTime",sdf.format(wh.getAfternoonStartTime()));
+            values.put("info",wh.getForenoonInfo());
+            forenoonafternoon.put("afternoon",values);
+        }
+
+        id_workindate.put("workingHours",forenoonafternoon);
+
+        Request request=new Request.Builder().url(URL+URL_workinghour+UserId).post(RequestBody.create(
+                MediaType.parse("application/json"), id_workindate.toString())).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull final Response response) {
+
+            }
+        });
+
+
+    }
 }
