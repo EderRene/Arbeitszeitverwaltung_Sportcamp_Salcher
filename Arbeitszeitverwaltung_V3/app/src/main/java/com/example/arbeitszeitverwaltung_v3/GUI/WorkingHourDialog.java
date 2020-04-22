@@ -141,14 +141,14 @@ public class WorkingHourDialog extends AppCompatDialogFragment implements View.O
         BoundTimePickerDialog timePickerDialog = new BoundTimePickerDialog(view.getContext(), new android.app.TimePickerDialog.OnTimeSetListener(){
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                if(hourOfDay<12) {
+
                     field.setText(hourOfDay + ":" + minutes);
                     Calendar c=Calendar.getInstance();
                     c.setTime(Calendar.getInstance().getTime());
                     c.set(Calendar.HOUR,hourOfDay);
                     c.set(Calendar.MINUTE,minutes);
-                    tmp=c.getTime();
-                }
+
+
     }
 
         }, presethour, presetminute, true);
