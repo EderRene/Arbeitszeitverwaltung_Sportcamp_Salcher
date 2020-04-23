@@ -1,9 +1,11 @@
 package com.example.arbeitszeitverwaltung_v3.GUI;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +25,11 @@ import com.example.arbeitszeitverwaltung_v3.Data.WorkingHour;
 import com.example.arbeitszeitverwaltung_v3.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
+
+import static android.app.Activity.RESULT_OK;
 
 public class WorkingHourDialog extends AppCompatDialogFragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -136,6 +141,7 @@ public class WorkingHourDialog extends AppCompatDialogFragment implements View.O
             getTime(endTimeAfternoon,12,00,23,59,13,0);
         }
     }
+
 
     public void getTime(final TextView field, int minhour,int minminute, int maxhour,int maxminute, int presethour, int presetminute){
         BoundTimePickerDialog timePickerDialog = new BoundTimePickerDialog(view.getContext(), new android.app.TimePickerDialog.OnTimeSetListener(){

@@ -1,7 +1,9 @@
 package com.example.arbeitszeitverwaltung_v3.Data;
 
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.example.arbeitszeitverwaltung_v3.GUI.Time_ManagerFragment;
 import com.example.arbeitszeitverwaltung_v3.Misc.JsonToWorkingHour;
@@ -27,10 +29,10 @@ import okhttp3.Response;
 
 public class Database{
     private static final String URL = "http://salcher.synology.me:8888";
-    private static final String URL_workinghour="/api/workingHours/";
+    private static final String URL_workinghour="/api/workingHours";
 
     private static final String PORT = "8888";
-    private int UserId = 3;
+    private int UserId = 1;
     private static Database db;
 
     private Database() {
@@ -43,9 +45,9 @@ public class Database{
         return db;
     }
 
-    public ArrayList<WorkingHour> getWorkinghours(final Date fromDate, final Date toDate){
+    public ArrayList<WorkingHour> getWorkinghours(){
         OkHttpClient client = new OkHttpClient();
-        Request request=new Request.Builder().url(URL+URL_workinghour+UserId).build();
+        Request request=new Request.Builder().url(URL+URL_workinghour+"/"+UserId).build();
         final ArrayList<WorkingHour> workingHours= new ArrayList<>();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -54,7 +56,7 @@ public class Database{
             }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
+            public void onResponse(@NotNull Call call, @NotNull final Response response) {
                 try {
                     String s= "{\"WorkingHours\":" +response.body().string()+"}";
 
@@ -66,9 +68,7 @@ public class Database{
                     for(int i=0;i<Jarray.length();i++){
                         workingHours.add(parser.toWorkingHour(Jarray.getJSONObject(i)));
                     }
-
                 } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         });
@@ -107,8 +107,8 @@ public class Database{
 
         id_workindate.put("workingHours",forenoonafternoon);
 
-        Request request=new Request.Builder().url(URL+URL_workinghour+UserId).post(RequestBody.create(
-                MediaType.parse("application/json"), id_workindate.toString())).build();
+        Request request=new Request.Builder().url(URL+URL_workinghour).post(RequestBody.create(id_workindate.toString(),
+                MediaType.parse("application/json"))).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -117,10 +117,7 @@ public class Database{
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull final Response response) {
-
             }
         });
-
-
     }
 }

@@ -3,6 +3,7 @@ package com.example.arbeitszeitverwaltung_v3.GUI;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -107,14 +108,6 @@ public class Time_ManagerFragment extends Fragment implements View.OnClickListen
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-        workingHours.clear();
-        workingHours = db.getWorkinghours(fromDate,toDate); // reload the items from database
-        adapterListView.notifyDataSetChanged();
-    }
-
-    @Override
     public void onClick(View v) {
         if (v.getId() == date1.getId()) {
             getDateFromPicker(3, date1, 1);
@@ -160,24 +153,22 @@ public class Time_ManagerFragment extends Fragment implements View.OnClickListen
         pickerDialog.show();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setWorkinghours();
+    }
 
     private void setWorkinghours() {
         getActivity().runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
-                if (workingHours == null) {
-                    workingHours = db.getWorkinghours(fromDate,toDate);
+                    workingHours = db.getWorkinghours();
                     adapterListView
                             = new ArrayAdapter<WorkingHour>(getContext(), android.R.layout.simple_list_item_1, workingHours);
                     listViewWorkingHours.setAdapter(adapterListView);
                     adapterListView.notifyDataSetChanged();
-                } else {
-                    workingHours = db.getWorkinghours(fromDate,toDate);
-                    adapterListView.notifyDataSetChanged();
-                }
-
-
             }
         });
     }
