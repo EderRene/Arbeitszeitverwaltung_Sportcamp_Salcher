@@ -6,12 +6,14 @@ DROP TABLE IF EXISTS documentType CASCADE;
 DROP TABLE IF EXISTS employeeRights CASCADE;
 DROP TABLE IF EXISTS worksIn CASCADE;
 DROP TABLE IF EXISTS ownsRight CASCADE;
+DROP TABLE IF EXISTS news CASCADE;
 DROP SEQUENCE IF EXISTS seqEmployee CASCADE;
 DROP SEQUENCE IF EXISTS seqAddress CASCADE;
 DROP SEQUENCE IF EXISTS seqCamp CASCADE;
 DROP SEQUENCE IF EXISTS seqDocumentType CASCADE;
 DROP SEQUENCE IF EXISTS seqDocument CASCADE;
 DROP SEQUENCE IF EXISTS seqEmployeeRights CASCADE;
+DROP SEQUENCE IF EXISTS seqNews CASCADE;
 
 CREATE SEQUENCE seqAddress START 1;
 CREATE SEQUENCE seqEmployee START 1;
@@ -19,6 +21,7 @@ CREATE SEQUENCE seqCamp START 1;
 CREATE SEQUENCE seqDocumentType START 1;
 CREATE SEQUENCE seqDocument START 1;
 CREATE SEQUENCE seqEmployeeRights START 1;
+CREATE SEQUENCE seqNews START 1;
 
 CREATE TABLE address
 (
@@ -37,9 +40,9 @@ CREATE TABLE employee
     id_Employee       INTEGER DEFAULT NEXTVAL('seqEmployee'),
     forename          VARCHAR(30),
     surname           VARCHAR(30),
-    dateOfBirth       DATE,
+    dateOfBirth       TIMESTAMP,
     id_Address        INTEGER,
-    svn               BIGINT,
+    svn           BIGINT,
     uid               INTEGER,
     bankAccountNumber VARCHAR(30),
     email             VARCHAR(30),
@@ -110,31 +113,16 @@ CREATE TABLE ownsRight
     CONSTRAINT fk_OwnsRight_UserRight FOREIGN KEY (id_UserRight) REFERENCES employeeRights (id_EmployeeRight)
 );
 
-INSERT INTO address VALUES(DEFAULT, 'Leifling 1', NULL, 9635, 'Dellach', 'Austria');
-INSERT INTO address VALUES(DEFAULT, 'Stöfflerberg 6', NULL, 9632, 'Kirchbach', 'Austria');
-INSERT INTO address VALUES(DEFAULT, 'Grafendord 78', NULL, 9632, 'Kirchbach', 'Austria');
-INSERT INTO address VALUES(DEFAULT, 'Seeboden 1', NULL, 9000, 'Seeboden', 'Austria');
-INSERT INTO address VALUES(DEFAULT, 'Kötschach 111', NULL, 9640, 'Kötschach', 'Austria');
-
-INSERT INTO employee VALUES(DEFAULT, 'Philipp', 'Hohenwarter', TO_DATE('26.02.2001', 'DD.MM.YYYY'), 1, 1000260201, NULL, '1A', 'philipp.hohenwarter@gmail.com', '0664111');
-INSERT INTO employee VALUES(DEFAULT, 'Rene', 'Eder', TO_DATE('21.02.2001', 'DD.MM.YYYY'), 2, 2000200201, NULL, '2A', 'ederene111@gmail.com', '0664222');
-INSERT INTO employee VALUES(DEFAULT, 'Philip', 'Zerza', TO_DATE('28.08.2001', 'DD.MM.YYYY'), 3, 3000280801, NULL, '3A', 'philip.zerza@gmail.com', '0664333');
-
-INSERT INTO camp VALUES(DEFAULT, 1, 'Sportcamp Salcher', 1);
-
-INSERT INTO documentType VALUES(Default, 'Lohnzettel');
-INSERT INTO documentType VALUES(Default, 'Arbeitsvertrag');
-INSERT INTO documentType VALUES(Default, 'Others');
-
-INSERT INTO worksIn VALUES(1, 1);
-INSERT INTO worksIn VALUES(2, 1);
-INSERT INTO worksIn VALUES(3, 1);
-
-SELECT * FROM employee;
-SELECT * FROM address;
-SELECT * FROM camp;
-SELECT * FROM worksIn;
+CREATE TABLE news
+(
+    id_News   INTEGER DEFAULT NEXTVAL('seqNews'),
+    id_Employee INTEGER,
+    dateTime TIMESTAMP,
+    infoHeader VARCHAR(100),
+    info VARCHAR(400),
+    CONSTRAINT pk_News PRIMARY KEY (id_News),
+    CONSTRAINT fk_News_Employee FOREIGN KEY (id_Employee) REFERENCES  employee (id_Employee),
+    CONSTRAINT uq_News UNIQUE (id_News, id_Employee, dateTime, infoHeader, info)
+);
 
 COMMIT;
-
-SELECT svn FROM employee;
