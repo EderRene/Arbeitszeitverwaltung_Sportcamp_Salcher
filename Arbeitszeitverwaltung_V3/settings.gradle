@@ -1,2 +1,0 @@
-include ':app'
-rootProject.name='Arbeitszeitverwaltung_V3'
